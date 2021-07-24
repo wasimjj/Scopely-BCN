@@ -1,12 +1,13 @@
 using Assets.Scripts;
+using Assets.Scripts.Turret;
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
 
-public class TurretBase : MonoBehaviour
+public class TurretBase : Turret
 {
     
-    [Tooltip("Creep Target to attack ")]
+    [Tooltip("Creep Target to attack and it is read only property ")]
     [ReadOnly]
     public Transform TargetCreep;
     [Tooltip("Creep Target to attack ")]
@@ -28,11 +29,7 @@ public class TurretBase : MonoBehaviour
     }
     public virtual void CheckForCreepsInRaduis()
     {
-        if (CheckIfCreepOutOfRange())
-        {
-            TargetCreep = null;
-            StopFire();
-        }
+        CheckIfCreepOutOfRange();
         int layerMask = 1 << LayerMask.NameToLayer("Creep");
         Collider[] colliders = Physics.OverlapSphere(transform.position, Radius, layerMask);
         if (colliders.Length > 0)
@@ -52,18 +49,17 @@ public class TurretBase : MonoBehaviour
         }
         TargetCreep = null;
 
-        bool CheckIfCreepOutOfRange()
+        void CheckIfCreepOutOfRange()
         {
             if (TargetCreep != null)
             {
-                if (!TargetCreep.gameObject.activeSelf)
+                if (!TargetCreep.gameObject.activeSelf || 
+                    Vector3.Distance(transform.position, TargetCreep.position) >= Radius)
                 {
-                    return true;
+                    TargetCreep = null;
+                    StopFire();
                 }
-                return Vector3.Distance(transform.position, TargetCreep.position) >= Radius;
             }
-            return false;
-
         }
 
 
@@ -107,9 +103,22 @@ public class TurretBase : MonoBehaviour
     {
         if (TargetCreep)
         {
-            BulletBase Bullet = GamePlayPoolManager.GetBullet(BulletType.Noraml).GetComponent<BulletBase>();
-            Bullet.ResetSafe(transform.position);
-            Bullet.Setup(TargetCreep);
+            BulletBase Bullet = null;
+            switch (BulletType)
+            {
+                case BulletType.Noraml:
+                    Bullet = GamePlayPoolManager.GetBullet(BulletType.Noraml).GetComponent<BulletBase>();
+                    break;
+                case BulletType.Ice:
+                    Bullet = GamePlayPoolManager.GetBullet(BulletType.Ice).GetComponent<BulletBase>();
+                    break;
+            }
+            if (Bullet)
+            {
+                Bullet.ResetSafe(transform.position);
+                Bullet.Setup(TargetCreep);
+            }
+         
         }
       
     }

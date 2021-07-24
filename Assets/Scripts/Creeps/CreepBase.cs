@@ -34,14 +34,14 @@ public class CreepBase : Creep
     {
         throw new System.NotImplementedException();
     }
-    public override void Attacked(float demage)
+    public override void Attacked(float Damage)
     {
-        Health -= demage;
+        Health -= Damage;
         if (Health <= 0)
         {
             GamePlayPoolManager.DestroyCreep(CreepType, this);
         }
-        Debug.Log("Got Attaked::"+demage);
+        Debug.Log("Got Attaked::"+Damage);
     }
 
     public override void Move(float Speed)
