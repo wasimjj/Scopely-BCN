@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.Creeps.iml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Scooply\Scopely BCN - Client Engineer Technical Test\Assets\Scripts\Creeps\.idea\.idea.Creeps.dir\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

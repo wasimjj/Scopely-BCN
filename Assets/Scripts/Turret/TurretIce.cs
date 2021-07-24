@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TurretIce : TurretBase
+{
+    void Start()
+    {
+        TargetCreep = null;
+        StartCoroutine("CheckForCreepsInRaduisLoop");
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
