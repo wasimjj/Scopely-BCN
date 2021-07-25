@@ -70,16 +70,23 @@ public class GamePlayManager : MonoBehaviour
     void OnPlayerHealthUpdateaCallback(float Health)
     {
         CreepsReachedAtBaseInAWave++;
+        if (Health > 0)
+        {
+            CheckForNewWave();
+        }
     }
     private void OnCreepKilledCallback(int Coins)
     {
         EconomyManager.AddCoins(Coins);
         TotlalCreepsKilledInAWave++;
-        if ((CreepsReachedAtBaseInAWave+TotlalCreepsKilledInAWave) >= TotlalCreepsInWave)
+        CheckForNewWave();
+    }
+    void CheckForNewWave()
+    {
+        if ((CreepsReachedAtBaseInAWave + TotlalCreepsKilledInAWave) >= TotlalCreepsInWave)
         {
             SetNewWave();
         }
-
     }
     void SetNewWave()
     {
@@ -87,6 +94,7 @@ public class GamePlayManager : MonoBehaviour
         {
             TotlalCreepsKilledInAWave = 0;
             TotlalCreepsInWave = 0;
+            CreepsReachedAtBaseInAWave = 0;
             SetTotalCreepsInWave(LayersInfo[CurrentWave]);
             StartCoroutine(SpawnCreepsWithDelay(LayersInfo[CurrentWave]));
             CurrentWave++;
