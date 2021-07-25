@@ -8,23 +8,32 @@ public class BulletBase : Bullet
 {
     [Tooltip("How much damage applt to the hit object")]
     public float Damagevalue;
+   
     [Tooltip("Enable if bullet will damage on area")]
     public bool IsAreaDamage;
+    
     [Tooltip("Define radius if is area adamge it will not work if area damage is not enabled")]
     public float Radius;
+    
     [Tooltip("Define perabolic speed")]
     public float Speed = 10;
+    
     [Tooltip("Define how much this bullet can damage")]
     public float DamageValue = 10;
+    
+  
+    
     [ReadOnly]
     [Tooltip("This is the target to attack and it is read only property")]
     public Transform TargetToAttach;
+    
     [Tooltip("Set bullet type form the dropdown")]
     public BulletType BulletType;
 
     public virtual void Awake()
     {
         GamePlayPoolManager = FindObjectOfType<GamePlayPoolManager>();
+        GamePlayManager = FindObjectOfType<GamePlayManager>();
     }
     public virtual void Setup(Transform target)
     {
@@ -49,7 +58,6 @@ public class BulletBase : Bullet
         while (currentDist >= 0.2f)
         {
             transform.LookAt(targetPos);
-            // Enable if bullet has some kind visual direction like arrow or something 
             transform.rotation = transform.rotation * Quaternion.Euler(Mathf.Clamp(-Angle, -42, 42), 0, 0); 
             currentDist = Vector3.Distance(transform.position, TargetToAttach.position);
             transform.Translate(Vector3.forward * Mathf.Min(Speed * Time.deltaTime, currentDist));
@@ -79,4 +87,6 @@ public class BulletBase : Bullet
     }
     [SerializeField]
     GamePlayPoolManager GamePlayPoolManager;
+    [SerializeField]
+    GamePlayManager GamePlayManager;
 }

@@ -8,10 +8,14 @@ namespace Assets.Scripts.Bullet
         [Range(.1f, 1.0f)]
         [Tooltip("Set the how much speed is going to be slow down")]
         public float SlowDownSpell;
+        
         [Tooltip("Set the time how much ")]
         public float SpellTime;
+        
         private float SpeedBeforSpell;
+       
         private bool IsUnderSpell;
+       
         public override void ApplyDamage()
         {
             CreepBase CreepBase = TargetToAttach.GetComponent<CreepBase>();

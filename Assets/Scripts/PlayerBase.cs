@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Tooltip("Add Player Health / base health")]
+    public float Health;
+ 
+    public float MaxHealth;
+    void Awake()
     {
-        
+        GamePlayManager = FindObjectOfType<GamePlayManager>();
+        MaxHealth = Health;
+    }
+    public void Attached(float Damage)
+    {
+        Health = Mathf.Max(0,Health- Damage);
+        if (Health <= 0)
+        {
+            GamePlayManager.OnLoseDelegate();
+        }
+        GamePlayManager.OnHealthUpdateDelegate(Mathf.Clamp(Health / MaxHealth,0.0f, 1.0f));
+
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    GamePlayManager GamePlayManager;
 }

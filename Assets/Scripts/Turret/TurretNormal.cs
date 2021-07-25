@@ -12,7 +12,6 @@ namespace Assets.Scripts.Turret
         {
             TargetCreep = null;
             StartCoroutine("CheckForCreepsInRaduisLoop");
-
         }
     }
 }

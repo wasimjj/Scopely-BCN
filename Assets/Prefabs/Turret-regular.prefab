@@ -46,9 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetCreep: {fileID: 0}
   Radius: 12
-  CoolDownTime: 2
+  CoolDownTime: 1.5
   SensorTime: 0.2
   BulletType: 0
+  CostInCoins: 5
   GamePlayPoolManager: {fileID: 0}
 --- !u!1 &3331154649744156603
 GameObject:

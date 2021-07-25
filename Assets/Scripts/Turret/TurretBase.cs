@@ -17,10 +17,12 @@ public class TurretBase : Turret
     public float Radius;
     [Tooltip("Difine cool down time for next bullet shot")]
     public float CoolDownTime;
-    [Tooltip("Define sensor time to detect enemis in seconds")]
+    [Tooltip("Define sensor time after that time turret will detect enemis around it  in seconds")]
     public float SensorTime;
     [Tooltip("Select type of the bullet from dropdown")]
     public BulletType BulletType;
+    [Tooltip("Define the cost of each turret in coins")]
+    public int CostInCoins;
 
 
     public virtual void Awake()

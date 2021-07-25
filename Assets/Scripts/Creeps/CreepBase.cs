@@ -11,20 +11,26 @@ public class CreepBase : Creep
 
     [Tooltip("Define the distance to attack to player in unity units")]
     public GameObject DeistanceToAttack;
+    
     [Tooltip("Set creep type form the dropdown")]
     public CreepType CreepType;
+    
+    [Tooltip("Define how much this coins on his kill")]
+    public int Coins = 1;
     public virtual void Awake()
     {
         GamePlayPoolManager = FindObjectOfType<GamePlayPoolManager>();
+        GamePlayManager = FindObjectOfType<GamePlayManager>();
     }
-    public void Setup(float SpeedLocal, float HealthLocal , Transform Target )
+    public void Setup(CreepsInfo CreepsInfo, Transform Target )
     {
-        Speed = SpeedLocal;
+        Speed = CreepsInfo.MoveSpped;
         TargetToAttach = Target;
-        if (HealthLocal > 0)
+        Attackvalue = CreepsInfo.AttackValue;
+        if (CreepsInfo.Health > 0)
         {
-            Health = HealthLocal;
-            MaxHealth = HealthLocal;
+            Health = CreepsInfo.Health;
+            MaxHealth = CreepsInfo.Health;
             return;
         }
         Health = MaxHealth;
@@ -40,8 +46,8 @@ public class CreepBase : Creep
         if (Health <= 0)
         {
             GamePlayPoolManager.DestroyCreep(CreepType, this);
+            GamePlayManager.OnCreepKilledDelegate(Coins);
         }
-        Debug.Log("Got Attaked::"+Damage);
     }
 
     public override void Move(float Speed)
@@ -50,6 +56,15 @@ public class CreepBase : Creep
         {
             transform.LookAt(TargetToAttach);
             transform.position = Vector3.MoveTowards(transform.position, TargetToAttach.position, Speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, TargetToAttach.position) <= 0.5f)
+            {
+                PlayerBase PlayerBase = TargetToAttach.GetComponent<PlayerBase>();
+                if (PlayerBase)
+                {
+                    PlayerBase.Attached(Attackvalue);
+                }
+                GamePlayPoolManager.DestroyCreep(CreepType, this);
+            }
             return;
         }
     }
@@ -75,4 +90,6 @@ public class CreepBase : Creep
     }
     [SerializeField]
     GamePlayPoolManager GamePlayPoolManager;
+    [SerializeField]
+    GamePlayManager GamePlayManager;
 }

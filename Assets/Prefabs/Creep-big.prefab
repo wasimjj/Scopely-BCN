@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc38bd75eed2ee489f4811622ba2c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attackvalue: 0
+  Attackvalue: 10
   Attackedvalue: 0
   Health: 0
   MaxHealth: 0
@@ -337,7 +337,9 @@ MonoBehaviour:
   TargetToAttach: {fileID: 0}
   DeistanceToAttack: {fileID: 0}
   CreepType: 1
+  Coins: 1
   GamePlayPoolManager: {fileID: 0}
+  GamePlayManager: {fileID: 0}
 --- !u!1 &7641877310818575618
 GameObject:
   m_ObjectHideFlags: 0
